@@ -52,6 +52,10 @@ resource "aws_security_group" "web_primary_sg" {
     protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  tags = {
+    Name = "primary-web-sg"
+  }
 }
 
 resource "aws_security_group" "web_secondary_sg" {
@@ -63,5 +67,9 @@ resource "aws_security_group" "web_secondary_sg" {
     to_port = 80
     protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "secondary-web-sg"
   }
 }
