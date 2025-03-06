@@ -6,9 +6,9 @@ terraform {
   }
 
   backend "s3" {
-    bucket = "terraform-state-ethan-hoang"
+    bucket = "terraform-state-khoahoang"
     key    = "terraform-state-multi-region-recovery"
-    region = "us-west-1"
+    region = "us-east-1"
   }
 }
 
@@ -17,6 +17,6 @@ provider "aws" {
 }
 
 provider "aws" {
-  alias = "secondary"
+  alias  = "secondary"
   region = var.secondary_region
 }

@@ -1,10 +1,11 @@
 #ec2
 
 resource "aws_instance" "primary_server" {
-  ami = var.primary_ami_id
-  instance_type = "t2.micro"
-  key_name = var.primary_kp
-  subnet_id = aws_subnet.primary_subnet.id
+  provider = aws
+  ami             = var.primary_ami_id
+  instance_type   = "t2.micro"
+  key_name        = var.primary_kp
+  subnet_id       = aws_subnet.primary_subnet_1.id
   security_groups = [aws_security_group.web_primary_sg.id]
 
   user_data = <<-EOF
@@ -14,17 +15,18 @@ resource "aws_instance" "primary_server" {
               systemctl start httpd
               systemctl enable httpd
               EOF
-  
+
   tags = {
     Name = "primary-server"
   }
 }
 
 resource "aws_instance" "secondary_server" {
-  ami = var.secondary_ami_id
-  instance_type = "t2.micro"
-  key_name = var.secondary_kp
-  subnet_id = aws_subnet.secondary_subnet.id
+  provider = aws.secondary
+  ami             = var.secondary_ami_id
+  instance_type   = "t2.micro"
+  key_name        = var.secondary_kp
+  subnet_id       = aws_subnet.secondary_subnet_1.id
   security_groups = [aws_security_group.web_secondary_sg.id]
 
   user_data = <<-EOF

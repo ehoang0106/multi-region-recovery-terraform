@@ -12,7 +12,7 @@ variable "primary_ami_id" {
 
 variable "secondary_ami_id" {
   default = "ami-05b10e08d247fb927"
-  
+
 }
 
 variable "primary_kp" {
