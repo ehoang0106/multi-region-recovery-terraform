@@ -22,3 +22,7 @@ variable "primary_kp" {
 variable "secondary_kp" {
   default = "secondary_kp"
 }
+
+variable "zone_id" {
+  default = "Z079718423UTVGDJ06Y8U"
+}
