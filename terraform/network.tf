@@ -15,12 +15,14 @@ resource "aws_subnet" "my-subnet-1" {
   vpc_id            = aws_vpc.my_vpc.id
   cidr_block        = "10.0.0.0/16"
   availability_zone = "us-west-1a"
+  depends_on        = [aws_vpc_ipv4_cidr_block_association.second_cidr_block]
 }
 
 resource "aws_subnet" "my-subnet-2" {
   vpc_id            = aws_vpc.my_vpc.id
   cidr_block        = "10.1.0.0/16"
-  availability_zone = "us-west-1b"
+  availability_zone = "us-west-1c"
+  depends_on        = [aws_vpc_ipv4_cidr_block_association.second_cidr_block]
 }
 
 resource "aws_internet_gateway" "my_igw" {

@@ -5,16 +5,16 @@ resource "aws_launch_template" "my_launch_template" {
   image_id             = var.primary_ami_id
   key_name             = var.primary_kp
   instance_type        = "t2.micro"
-  security_group_names = [aws_security_group.my_sg.name]
-  user_data            = <<-EOF
+  vpc_security_group_ids = [aws_security_group.my_sg.id]
+  user_data            = base64encode(<<-EOF
               #!/bin/bash
               yum install -y httpd
-              echo "Web Server</h1>" > /var/www/html/index.html
+              echo "<h1>Web Server</h1>" > /var/www/html/index.html
               systemctl enable httpd
               systemctl start httpd
               EOF
-
-
+  )
+  depends_on = [ aws_security_group.my_sg ]
 }
 
 #auto scaling group
