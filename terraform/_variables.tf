@@ -1,10 +1,3 @@
-variable "primary_vpc_name" {
-  default = "primary-vpc"
-}
-
-variable "secondary_vpc_name" {
-  default = "secondary-vpc"
-}
 
 variable "primary_region" {
   default = "us-west-1"
