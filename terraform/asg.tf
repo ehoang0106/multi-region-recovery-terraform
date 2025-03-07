@@ -30,8 +30,28 @@ resource "aws_autoscaling_group" "my_asg" {
     version = "$Latest"
   }
 
+  #attach to load balancer/target group
+  target_group_arns = [aws_lb_target_group.my_tg.arn]
+  health_check_type = "ELB"  
+  termination_policies = ["OldestInstance"]
   availability_zone_distribution {
     capacity_distribution_strategy = "balanced-best-effort"
   }
   
+}
+
+#auto scaling group policy
+#target tracking scaling policy, set a scaling policy name, metric type is average cpu utilization, target value is 50%
+
+resource "aws_autoscaling_policy" "my_asg_policy" {
+  name = "my-asg-policy"
+  policy_type = "TargetTrackingScaling"
+  estimated_instance_warmup = 200
+  autoscaling_group_name = aws_autoscaling_group.my_asg.name
+  target_tracking_configuration {
+    predefined_metric_specification {
+      predefined_metric_type = "ASGAverageCPUUtilization"
+    }
+    target_value = 50.0
+  }
 }

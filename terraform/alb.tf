@@ -10,12 +10,13 @@ resource "aws_lb_target_group" "my_tg" {
 
 #load balancer
 resource "aws_lb" "my-lb" {
-  name = "my-lg"
+  name = "my-lb"
   internal = false
   load_balancer_type = "application"
   vpc_id = aws_vpc.my_vpc.id
   security_groups = [aws_security_group.my_sg.id]
-  subnets = [for subnet in aws_subnet.public : subnet.id]
+  #subnet
+  subnets = [aws_subnet.my-subnet-1.id, aws_subnet.my-subnet-2.id]
 }
 
 #listener
