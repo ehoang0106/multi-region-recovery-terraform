@@ -66,6 +66,13 @@ resource "aws_security_group" "my_sg" {
   }
 
   ingress {
+    from_port = 443
+    to_port = 443
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
@@ -82,4 +89,14 @@ resource "aws_security_group" "my_sg" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+}
+
+#route53 record - create a cname for the load balancer
+
+resource "aws_route53_record" "my_record" {
+  zone_id = var.my_zone_id
+  name    = "web.khoah.net"
+  type    = "CNAME"
+  ttl     = "300"
+  records = [aws_lb.my-lb.dns_name]
 }

@@ -10,3 +10,11 @@ variable "primary_ami_id" {
 variable "primary_kp" {
   default = "my-kp"
 }
+
+variable "cert_arn" {
+  default = "arn:aws:acm:us-west-1:706572850235:certificate/eac6e688-8e0c-4545-a122-d67d1d7bf04a"
+}
+
+variable "my_zone_id" {
+  default = "Z09372142GLGU75DMF3RP"
+}
