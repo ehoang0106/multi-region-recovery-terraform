@@ -8,5 +8,5 @@ variable "primary_ami_id" {
 
 
 variable "primary_kp" {
-  default = "primary_kp"
+  default = "my-kp"
 }
