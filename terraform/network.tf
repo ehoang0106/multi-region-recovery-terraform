@@ -7,19 +7,19 @@ resource "aws_vpc" "my_vpc" {
 }
 
 resource "aws_vpc_ipv4_cidr_block_association" "second_cidr_block" {
-  vpc_id = aws_vpc.my_vpc.id
+  vpc_id     = aws_vpc.my_vpc.id
   cidr_block = "10.1.0.0/16"
 }
 
 resource "aws_subnet" "my-subnet-1" {
-  vpc_id = aws_vpc.my_vpc.id
-  cidr_block = "10.0.0.0/16"
+  vpc_id            = aws_vpc.my_vpc.id
+  cidr_block        = "10.0.0.0/16"
   availability_zone = "us-west-1a"
 }
 
 resource "aws_subnet" "my-subnet-2" {
-  vpc_id = aws_vpc.my_vpc.id
-  cidr_block = "10.1.0.0/16"
+  vpc_id            = aws_vpc.my_vpc.id
+  cidr_block        = "10.1.0.0/16"
   availability_zone = "us-west-1b"
 }
 
@@ -57,16 +57,16 @@ resource "aws_security_group" "my_sg" {
   vpc_id = aws_vpc.my_vpc.id
 
   ingress {
-    from_port = 80
-    to_port = 80
-    protocol = "tcp"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
-    from_port = 22
-    to_port = 22
-    protocol = "tcp"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -75,9 +75,9 @@ resource "aws_security_group" "my_sg" {
   }
 
   egress {
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
