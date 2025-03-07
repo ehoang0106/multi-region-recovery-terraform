@@ -10,7 +10,10 @@ resource "aws_launch_template" "my_launch_template" {
   depends_on = [ aws_security_group.my_sg ]
 
   #add network interface and assign public ip
-  
+  network_interfaces {
+    associate_public_ip_address = true
+    
+  }
 }
 
 #auto scaling group
