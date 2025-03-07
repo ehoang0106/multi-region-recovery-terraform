@@ -6,7 +6,7 @@ terraform {
   }
 
   backend "s3" {
-    bucket = "terraform-state-ethan-hoang"
+    bucket = "terraform-state-khoa-hoang"
     key    = "terraform-state-multi-region-recovery"
     region = "us-west-1"
   }
