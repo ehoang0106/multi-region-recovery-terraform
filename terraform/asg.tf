@@ -6,15 +6,11 @@ resource "aws_launch_template" "my_launch_template" {
   key_name             = var.primary_kp
   instance_type        = "t2.micro"
   vpc_security_group_ids = [aws_security_group.my_sg.id]
-  user_data            = base64encode(<<-EOF
-              #!/bin/bash
-              yum install -y httpd
-              echo "<h1>Web Server</h1>" > /var/www/html/index.html
-              systemctl enable httpd
-              systemctl start httpd
-              EOF
-  )
+  user_data = base64encode(file("${path.module}/script.sh"))
   depends_on = [ aws_security_group.my_sg ]
+
+  #add network interface and assign public ip
+  
 }
 
 #auto scaling group
@@ -46,7 +42,7 @@ resource "aws_autoscaling_group" "my_asg" {
 resource "aws_autoscaling_policy" "my_asg_policy" {
   name                      = "my-asg-policy"
   policy_type               = "TargetTrackingScaling"
-  estimated_instance_warmup = 200
+  estimated_instance_warmup = 300
   autoscaling_group_name    = aws_autoscaling_group.my_asg.name
   target_tracking_configuration {
     predefined_metric_specification {
