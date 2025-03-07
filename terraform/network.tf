@@ -93,10 +93,10 @@ resource "aws_security_group" "my_sg" {
 
 #route53 record - create a cname for the load balancer
 
-resource "aws_route53_record" "my_record" {
-  zone_id = var.my_zone_id
-  name    = "web.khoah.net"
-  type    = "CNAME"
-  ttl     = "300"
-  records = [aws_lb.my-lb.dns_name]
-}
+# resource "aws_route53_record" "my_record" {
+#   zone_id = var.my_zone_id
+#   name    = "web.khoah.net"
+#   type    = "CNAME"
+#   ttl     = "300"
+#   records = [aws_lb.my-lb.dns_name]
+# }

@@ -1,5 +1,18 @@
+variable "primary_vpc_name" {
+  default = "primary-vpc"
+}
+
+variable "secondary_vpc_name" {
+  default = "secondary-vpc"
+}
+
 variable "primary_region" {
   default = "us-west-1"
+}
+
+variable "secondary_region" {
+  default = "us-east-1"
+  
 }
 
 variable "primary_ami_id" {
