@@ -6,7 +6,7 @@ resource "aws_launch_template" "my_launch_template_secondary" {
   image_id             = var.secondary_ami_id
   key_name             = var.secondary_kp
   instance_type        = "t2.micro"
-  #user_data = base64encode(file("${path.module}/script_secondary.sh"))
+  user_data = base64encode(file("${path.module}/script_secondary.sh"))
   depends_on = [ aws_security_group.my_sg_secondary ]
 
   #add network interface and assign public ip
