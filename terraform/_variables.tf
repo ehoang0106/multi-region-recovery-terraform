@@ -12,9 +12,18 @@ variable "primary_ami_id" {
   default = "ami-094b981da55429bfc"
 }
 
+variable "secondary_ami_id" {
+  default = "ami-08b5b3a93ed654d19"
+  
+}
+
 
 variable "primary_kp" {
   default = "my-kp"
+}
+
+variable "secondary_kp" {
+  default = "secondary_kp"
 }
 
 variable "cert_arn" {
@@ -26,5 +35,9 @@ variable "cert_arn_secondary" {
 }
 
 variable "my_zone_id" {
+  default = "Z09372142GLGU75DMF3RP"
+}
+
+variable "zone_id"{
   default = "Z09372142GLGU75DMF3RP"
 }

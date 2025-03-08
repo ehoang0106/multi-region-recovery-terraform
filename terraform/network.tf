@@ -92,12 +92,69 @@ resource "aws_security_group" "my_sg" {
   }
 }
 
-#route53 record - create a cname for the load balancer
+#aws route53 health check
+resource "aws_route53_health_check" "web-server-1" {
+  provider = aws
+  fqdn = aws_lb.my-lb.dns_name
+  port = 80
+  type = "HTTP"
+  resource_path = "/"
+  failure_threshold = 3
+  request_interval = 30
+  measure_latency = true
 
-# resource "aws_route53_record" "my_record" {
-#   zone_id = var.my_zone_id
-#   name    = "web.khoah.net"
-#   type    = "CNAME"
-#   ttl     = "300"
-#   records = [aws_lb.my-lb.dns_name]
+  tags = {
+    Name = "web-server-1"
+  }
+}
+
+resource "aws_route53_health_check" "web-server-2" {
+  provider = aws.secondary
+  fqdn = aws_lb.my-lb_secondary.dns_name
+  port = 80
+  type = "HTTP"
+  resource_path = "/"
+  failure_threshold = 3
+  request_interval = 30
+  measure_latency = true
+
+  tags = {
+    Name = "web-server-2"
+  }
+}
+
+# data "aws_route53_zone" "main" {
+#   name = "khoah.net"
+#   private_zone = false
+# }
+# resource "aws_route53_record" "web-server-1" {
+#   zone_id = data.aws_route53_zone.my_zone.zone_id
+#   name = "web"
+#   type = "A"
+#   alias {
+#     name = aws_lb.my-lb.dns_name
+#     zone_id = aws_lb.my-lb.zone_id
+#     evaluate_target_health = true
+#   }
+#   #failover routing policy
+#   failover_routing_policy {
+#     type = "PRIMARY"
+#   }
+#   health_check_id = aws_route53_health_check.web-server-1.id 
+# }
+
+# resource "aws_route53_record" "web-server-2" {
+#   zone_id = aws_route53_zone.my_zone.zone_id
+#   name = "web"
+#   type = "A"
+#   alias {
+#     name = aws_lb.my-lb_secondary.dns_name
+#     zone_id = aws_lb.my-lb_secondary.zone_id
+#     evaluate_target_health = true
+#   }
+#   #failover routing policy
+#   failover_routing_policy {
+#     type = "SECONDARY"
+#   }
+#   health_check_id = aws_route53_health_check.web-server-2.id 
 # }
