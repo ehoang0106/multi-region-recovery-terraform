@@ -123,38 +123,48 @@ resource "aws_route53_health_check" "web-server-2" {
   }
 }
 
-# data "aws_route53_zone" "main" {
-#   name = "khoah.net"
-#   private_zone = false
-# }
-# resource "aws_route53_record" "web-server-1" {
-#   zone_id = data.aws_route53_zone.my_zone.zone_id
-#   name = "web"
-#   type = "A"
-#   alias {
-#     name = aws_lb.my-lb.dns_name
-#     zone_id = aws_lb.my-lb.zone_id
-#     evaluate_target_health = true
-#   }
-#   #failover routing policy
-#   failover_routing_policy {
-#     type = "PRIMARY"
-#   }
-#   health_check_id = aws_route53_health_check.web-server-1.id 
-# }
+#aws route53 record for failover 2 regions
 
-# resource "aws_route53_record" "web-server-2" {
-#   zone_id = aws_route53_zone.my_zone.zone_id
-#   name = "web"
-#   type = "A"
-#   alias {
-#     name = aws_lb.my-lb_secondary.dns_name
-#     zone_id = aws_lb.my-lb_secondary.zone_id
-#     evaluate_target_health = true
-#   }
-#   #failover routing policy
-#   failover_routing_policy {
-#     type = "SECONDARY"
-#   }
-#   health_check_id = aws_route53_health_check.web-server-2.id 
-# }
+data "aws_route53_zone" "main" {
+  name = "khoah.net"
+  private_zone = false
+}
+
+
+resource "aws_route53_record" "web-server-1" {
+  zone_id = data.aws_route53_zone.main.zone_id
+  name = "web.khoah.net"
+  type = "A"
+
+  failover_routing_policy {
+    type = "PRIMARY"
+  }
+
+  set_identifier = "primary"
+  health_check_id = aws_route53_health_check.web-server-1.id
+
+  alias {
+    name = aws_lb.my-lb.dns_name
+    zone_id = aws_lb.my-lb.zone_id
+    evaluate_target_health = true
+  }
+}
+
+resource "aws_route53_record" "web-server-2" {
+  zone_id = data.aws_route53_zone.main.zone_id
+  name = "web.khoah.net"
+  type = "A"
+
+  failover_routing_policy {
+    type = "SECONDARY"
+  }
+
+  set_identifier = "secondary"
+  health_check_id = aws_route53_health_check.web-server-2.id
+
+  alias {
+    name = aws_lb.my-lb_secondary.dns_name
+    zone_id = aws_lb.my-lb_secondary.zone_id
+    evaluate_target_health = true
+  }
+}
