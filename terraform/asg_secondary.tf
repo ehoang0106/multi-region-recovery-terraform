@@ -20,10 +20,10 @@ resource "aws_launch_template" "my_launch_template_secondary" {
 resource "aws_autoscaling_group" "my_asg_secondary" {
   provider = aws.secondary
   name                      = "my-asg_secondary"
-  min_size                  = 1
+  min_size                  = 0
   max_size                  = 2
   health_check_grace_period = 300
-  desired_capacity          = 1
+  desired_capacity          = 0
   vpc_zone_identifier       = [aws_subnet.my-subnet-1_secondary.id, aws_subnet.my-subnet-2_secondary.id]
   launch_template {
     id      = aws_launch_template.my_launch_template_secondary.id
