@@ -63,7 +63,7 @@ resource "aws_lambda_permission" "allow_cloudwatch_off" {
 data "archive_file" "lambda_function_turn_off" {
   type        = "zip"
   source_file = "${path.module}/lambda_function_turn_off.py"
-  output_path = "${path.module}/lambda_function_tufn_off.zip"
+  output_path = "${path.module}/lambda_function_turn_off.zip"
 }
 resource "aws_lambda_function" "trigger-2nd-server-off" {
   provider = aws.secondary
