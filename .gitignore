@@ -1,8 +1,5 @@
 .terraform.lock.hcl
 .terraform/
 .$diagram.drawio.dtmp
-<<<<<<< HEAD
-.$new.drawio.bkp
-=======
 .venv
->>>>>>> 178abee2b0b7fba200521d840ac031516fec13db
+.zip
