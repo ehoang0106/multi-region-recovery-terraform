@@ -1,24 +1,24 @@
 #launch template
 
 resource "aws_launch_template" "my_launch_template_secondary" {
-  provider = aws.secondary
-  name                 = "my-launch-template-secondary"
-  image_id             = var.secondary_ami_id
-  key_name             = var.secondary_kp
-  instance_type        = "t2.micro"
-  user_data = base64encode(file("${path.module}/script_secondary.sh"))
-  depends_on = [ aws_security_group.my_sg_secondary ]
+  provider      = aws.secondary
+  name          = "my-launch-template-secondary"
+  image_id      = var.secondary_ami_id
+  key_name      = var.secondary_kp
+  instance_type = "t2.micro"
+  user_data     = base64encode(file("${path.module}/script_secondary.sh"))
+  depends_on    = [aws_security_group.my_sg_secondary]
 
   #add network interface and assign public ip
   network_interfaces {
-    security_groups = [aws_security_group.my_sg_secondary.id] #when network interface is created, it will be assigned to this security group
+    security_groups             = [aws_security_group.my_sg_secondary.id] #when network interface is created, it will be assigned to this security group
     associate_public_ip_address = true
   }
 }
 
 #auto scaling group
 resource "aws_autoscaling_group" "my_asg_secondary" {
-  provider = aws.secondary
+  provider                  = aws.secondary
   name                      = "my-asg_secondary"
   min_size                  = 0
   max_size                  = 2
@@ -42,7 +42,7 @@ resource "aws_autoscaling_group" "my_asg_secondary" {
 #auto scaling group policy
 #target tracking scaling policy, set a scaling policy name, metric type is average cpu utilization, target value is 50%
 resource "aws_autoscaling_policy" "my_asg_policy_secondary" {
-  provider = aws.secondary
+  provider                  = aws.secondary
   name                      = "my-asg-policy-secondary"
   policy_type               = "TargetTrackingScaling"
   estimated_instance_warmup = 300

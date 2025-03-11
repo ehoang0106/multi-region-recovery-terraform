@@ -5,7 +5,7 @@ variable "primary_region" {
 
 variable "secondary_region" {
   default = "us-east-1"
-  
+
 }
 
 variable "primary_ami_id" {
@@ -14,7 +14,7 @@ variable "primary_ami_id" {
 
 variable "secondary_ami_id" {
   default = "ami-08b5b3a93ed654d19"
-  
+
 }
 
 
@@ -38,6 +38,6 @@ variable "my_zone_id" {
   default = "Z09372142GLGU75DMF3RP"
 }
 
-variable "zone_id"{
+variable "zone_id" {
   default = "Z09372142GLGU75DMF3RP"
 }

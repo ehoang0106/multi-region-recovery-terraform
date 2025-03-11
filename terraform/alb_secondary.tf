@@ -1,7 +1,7 @@
 #target group
 
 resource "aws_lb_target_group" "my_tg_secondary" {
-  provider = aws.secondary
+  provider    = aws.secondary
   name        = "my-tg-secondary"
   target_type = "instance"
   port        = 80
@@ -12,7 +12,7 @@ resource "aws_lb_target_group" "my_tg_secondary" {
 #load balancer
 
 resource "aws_lb" "my-lb_secondary" {
-  provider = aws.secondary
+  provider           = aws.secondary
   name               = "my-lb-secondary"
   internal           = false
   load_balancer_type = "application"
@@ -25,7 +25,7 @@ resource "aws_lb" "my-lb_secondary" {
 #listener
 
 resource "aws_lb_listener" "my_listener_secondary" {
-  provider = aws.secondary
+  provider          = aws.secondary
   load_balancer_arn = aws_lb.my-lb_secondary.arn
   port              = 80
   protocol          = "HTTP"
@@ -36,7 +36,7 @@ resource "aws_lb_listener" "my_listener_secondary" {
 }
 
 resource "aws_lb_listener" "my_listener_https_secondary" {
-  provider = aws.secondary
+  provider          = aws.secondary
   load_balancer_arn = aws_lb.my-lb_secondary.arn
   port              = 443
   protocol          = "HTTPS"
@@ -44,6 +44,6 @@ resource "aws_lb_listener" "my_listener_https_secondary" {
     type             = "forward"
     target_group_arn = aws_lb_target_group.my_tg_secondary.arn
   }
-  ssl_policy = "ELBSecurityPolicy-2016-08"
+  ssl_policy      = "ELBSecurityPolicy-2016-08"
   certificate_arn = var.cert_arn_secondary
 }

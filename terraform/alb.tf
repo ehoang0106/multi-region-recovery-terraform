@@ -39,6 +39,6 @@ resource "aws_lb_listener" "my_listener_https" {
     type             = "forward"
     target_group_arn = aws_lb_target_group.my_tg.arn
   }
-  ssl_policy = "ELBSecurityPolicy-2016-08"
+  ssl_policy      = "ELBSecurityPolicy-2016-08"
   certificate_arn = var.cert_arn
 }

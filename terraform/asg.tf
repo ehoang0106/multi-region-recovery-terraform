@@ -1,18 +1,18 @@
 #launch template
 
 resource "aws_launch_template" "my_launch_template" {
-  name                 = "my-launch-template"
-  image_id             = var.primary_ami_id
-  key_name             = var.primary_kp
-  instance_type        = "t2.micro"
-  user_data = base64encode(file("${path.module}/script.sh"))
-  depends_on = [ aws_security_group.my_sg ]
+  name          = "my-launch-template"
+  image_id      = var.primary_ami_id
+  key_name      = var.primary_kp
+  instance_type = "t2.micro"
+  user_data     = base64encode(file("${path.module}/script.sh"))
+  depends_on    = [aws_security_group.my_sg]
 
   #add network interface and assign public ip
   network_interfaces {
-    security_groups = [aws_security_group.my_sg.id] #when network interface is created, it will be assigned to this security group
+    security_groups             = [aws_security_group.my_sg.id] #when network interface is created, it will be assigned to this security group
     associate_public_ip_address = true
-    
+
   }
 }
 
