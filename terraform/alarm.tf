@@ -36,7 +36,7 @@ resource "aws_cloudwatch_metric_alarm" "primary-server-unhealthy" {
   period              = 60
   statistic           = "Average"
   
-  alarm_actions = [aws_lambda_function.trigger-2nd-server.arn]
+  alarm_actions = [aws_sns_topic.primary-server-healthy.arn,aws_lambda_function.trigger-2nd-server.arn]
 
   dimensions = {
     HealthCheckId = aws_route53_health_check.web-server-1.id
@@ -54,7 +54,7 @@ resource "aws_cloudwatch_metric_alarm" "primary-server-healthy" {
   period              = 60
   statistic           = "Average"
   
-  alarm_actions = [aws_lambda_function.trigger-2nd-server-off.arn]
+  alarm_actions = [aws_lambda_function.trigger-2nd-server-off.arn, aws_sns_topic.primary-server-unhealthy.arn]
 
   dimensions = {
     HealthCheckId = aws_route53_health_check.web-server-1.id
