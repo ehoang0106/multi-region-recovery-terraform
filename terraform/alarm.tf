@@ -24,6 +24,7 @@ resource "aws_sns_topic_subscription" "primary-server-healthy" {
 }
 
 
+
 resource "aws_cloudwatch_metric_alarm" "primary-server-unhealthy" {
   provider = aws.secondary
   alarm_name          = "primary-server-unhealthy"
