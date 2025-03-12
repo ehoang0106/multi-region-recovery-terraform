@@ -1,13 +1,27 @@
 # #create sns topic
-# resource "aws_sns_topic" "primary-server-unhealthy" {
-#   provider = aws.secondary
-#   name     = "primary-server-unhealthy"
-# }
+resource "aws_sns_topic" "primary-server-unhealthy" {
+  provider = aws.secondary
+  name     = "primary-server-unhealthy"
+}
 
-# resource "aws_sns_topic" "secondary-server-unhealthy" {
-#   provider = aws.secondary
-#   name     = "secondary-server-unhealthy"
-# }
+resource "aws_sns_topic" "primary-server-healthy" {
+  provider = aws.secondary
+  name     = "primary-server-healthy"
+}
+
+resource "aws_sns_topic_subscription" "primary-server-unhealthy" {
+  provider = aws.secondary
+  topic_arn = aws_sns_topic.primary-server-unhealthy.arn
+  protocol = "email"
+  endpoint = "khoahoang1698@gmail.com"
+}
+
+resource "aws_sns_topic_subscription" "primary-server-healthy" {
+  provider = aws.secondary
+  topic_arn = aws_sns_topic.primary-server-healthy.arn
+  protocol = "email"
+  endpoint = "khoahoang1698@gmail.com"
+}
 
 
 resource "aws_cloudwatch_metric_alarm" "primary-server-unhealthy" {
