@@ -2,4 +2,5 @@
 .terraform/
 .$diagram.drawio.dtmp
 .venv
-.zip
+lambda_function.zip
+lambda_function_turn_off.zip
